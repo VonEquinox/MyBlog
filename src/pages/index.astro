@@ -48,64 +48,43 @@ const renderedPosts = await Promise.all(
             aria-expanded="false"
             aria-label={`Open ${post.data.title}`}
           >
-            <div class="post-card__summary" data-summary>
-              <h2 data-summary-title>{post.data.title}</h2>
-              <time data-summary-meta datetime={post.data.date.toISOString()}>
-                {formatDate(post.data.date)}
-              </time>
-
-              {post.data.description && <p data-summary-desc>{post.data.description}</p>}
-
-              {post.data.tags && post.data.tags.length > 0 && (
-                <div class="post-card__tags" data-summary-tags>
-                  {post.data.tags.map((tag) => (
-                    <span>{tag}</span>
-                  ))}
-                </div>
-              )}
-            </div>
+            <span class="sr-only">Open {post.data.title}</span>
           </button>
 
-          <section class="post-card__panel" data-post-panel aria-hidden="true">
-            <div class="post-card__panel-shell">
-              <button class="post-card__back" type="button" data-post-close>
-                <span aria-hidden="true">←</span>
-                返回上一级
-              </button>
+          <div class="post-card__panel-shell">
+            <button class="post-card__back" type="button" data-post-close>
+              <span aria-hidden="true">←</span>
+              返回上一级
+            </button>
 
-              <article class="post-card__panel-content" data-reader>
-                <header class="post-card__reader-head" data-reader-head>
-                  <time data-reader-meta datetime={post.data.date.toISOString()}>
-                    {formatDate(post.data.date)}
-                  </time>
-                  <h2 class="post-card__reader-title" data-reader-title>
-                    {post.data.title}
-                  </h2>
+            <article class="post-card__panel-content" data-reader>
+              <header class="post-card__summary" data-summary>
+                <h2 data-summary-title>{post.data.title}</h2>
+                <time data-summary-meta datetime={post.data.date.toISOString()}>
+                  {formatDate(post.data.date)}
+                </time>
 
-                  {post.data.description && (
-                    <p class="post-card__reader-description" data-reader-desc>
-                      {post.data.description}
-                    </p>
-                  )}
+                {post.data.description && <p data-summary-desc>{post.data.description}</p>}
 
-                  {post.data.tags && post.data.tags.length > 0 && (
-                    <div class="post-card__tags post-card__tags--reader" data-reader-tags>
-                      {post.data.tags.map((tag) => (
-                        <span>{tag}</span>
-                      ))}
-                    </div>
-                  )}
-                </header>
+                {post.data.tags && post.data.tags.length > 0 && (
+                  <div class="post-card__tags" data-summary-tags>
+                    {post.data.tags.map((tag) => (
+                      <span>{tag}</span>
+                    ))}
+                  </div>
+                )}
+              </header>
 
-                <div
-                  class="post-card__reader-prose prose prose-lg prose-neutral max-w-none dark:prose-invert prose-headings:font-medium prose-a:text-primary hover:prose-a:text-primary-container prose-img:rounded-2xl prose-pre:bg-surface-variant prose-pre:text-on-surface-variant"
-                  data-reader-prose
-                >
-                  <Content />
-                </div>
-              </article>
-            </div>
-          </section>
+              <div
+                class="post-card__reader-prose prose prose-lg prose-neutral max-w-none dark:prose-invert prose-headings:font-medium prose-a:text-primary hover:prose-a:text-primary-container prose-img:rounded-2xl prose-pre:bg-surface-variant prose-pre:text-on-surface-variant"
+                data-post-panel
+                aria-hidden="true"
+                data-reader-prose
+              >
+                <Content />
+              </div>
+            </article>
+          </div>
         </article>
       ))}
     </div>
