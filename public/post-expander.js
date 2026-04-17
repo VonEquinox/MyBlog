@@ -18,9 +18,10 @@ if (!grid) {
   const originalOrder = cards.slice();
 
   // Motion tuning
-  // Temporarily slow down motion for tuning/debugging.
-  // 200% = 2x duration (slower).
-  const TIME_SCALE = 2;
+  // Motion tuning
+  // 1 = baseline. >1 = slower. <1 = faster.
+  // User asked to speed it up a bit from the previous 200% slow tuning.
+  const TIME_SCALE = 1.25;
   const DURATION_ACTIVE = 720 * TIME_SCALE;
   const DURATION_SIBLINGS = 650 * TIME_SCALE;
   const EASING = 'cubic-bezier(0.22, 1, 0.36, 1)';

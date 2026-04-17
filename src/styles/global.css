@@ -134,7 +134,7 @@
 .post-card {
   position: relative;
   /* Keep internal fades in sync with the slowed FLIP/WAAPI timings. */
-  --content-duration: 640ms;
+  --content-duration: 400ms;
   --content-easing: cubic-bezier(0.22, 1, 0.36, 1);
   --collapse-summary-width: 100%;
   /* Title tokens (single title element reused for card + full-screen). */
