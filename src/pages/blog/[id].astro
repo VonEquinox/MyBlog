@@ -1,0 +1,73 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('blog');
+  return blogEntries.map(entry => ({
+    params: { id: entry.id }, props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const cardName = `post-card-${entry.id}`;
+const titleName = `post-title-${entry.id}`;
+const metaName = `post-meta-${entry.id}`;
+const descName = `post-desc-${entry.id}`;
+const tagsName = `post-tags-${entry.id}`;
+---
+
+<Layout title={`${entry.data.title} | My Research`} fullBleed={true}>
+  <section class="w-full">
+    <article
+      transition:name={cardName}
+      class="flex min-h-[calc(100svh-4.5rem)] w-full flex-col border-y border-outline/10 bg-surface/96 px-5 py-6 md:px-10 md:py-10"
+    >
+      <div class="mx-auto flex w-full max-w-4xl flex-1 flex-col">
+        <a
+          href="/"
+          class="mb-8 inline-flex w-fit items-center gap-2 rounded-full border border-outline/14 bg-background/80 px-4 py-2 text-sm font-medium text-on-surface-variant transition-colors hover:text-on-surface"
+        >
+          <span aria-hidden="true">←</span>
+          Back to posts
+        </a>
+
+        <header class="mb-10 flex flex-col gap-5">
+          <div transition:name={metaName} class="text-sm text-on-surface-variant font-medium">
+            <time datetime={entry.data.date.toISOString()}>
+              {entry.data.date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              })}
+            </time>
+          </div>
+          <h1 transition:name={titleName} class="max-w-4xl text-4xl font-medium leading-[1.02] tracking-tight text-on-surface text-balance md:text-6xl">
+            {entry.data.title}
+          </h1>
+          {entry.data.description && (
+            <p transition:name={descName} class="max-w-3xl text-lg leading-8 text-on-surface-variant md:text-2xl md:leading-10">
+              {entry.data.description}
+            </p>
+          )}
+          {entry.data.tags && entry.data.tags.length > 0 && (
+            <div transition:name={tagsName} class="flex flex-wrap gap-2 pt-1">
+              {entry.data.tags.map((tag: string) => (
+                <span class="rounded-full border border-outline/14 bg-background px-3 py-1 text-xs font-medium tracking-[0.01em] text-secondary">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+        </header>
+
+        <div class="prose prose-lg prose-neutral dark:prose-invert max-w-none 
+          prose-headings:font-medium prose-a:text-primary hover:prose-a:text-primary-container
+          prose-img:rounded-2xl prose-pre:bg-surface-variant prose-pre:text-on-surface-variant">
+          <Content />
+        </div>
+      </div>
+    </article>
+  </section>
+</Layout>

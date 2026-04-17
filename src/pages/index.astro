@@ -1,0 +1,115 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+
+const posts = await getCollection('blog');
+posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const formatDate = (date: Date) =>
+  date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
+
+const renderedPosts = await Promise.all(
+  posts.map(async (post) => {
+    const { Content } = await render(post);
+    return { post, Content };
+  })
+);
+---
+
+<Layout title="My Research | Home">
+  <section class="home-shell">
+    <header class="home-hero" data-home-hero>
+      <h1>
+        Explorations in <span>Computer Science</span>
+        <br />
+        & Beyond
+      </h1>
+      <p>
+        Welcome to my personal corner of the web. I share my notes on computer organization,
+        deep dives into modern tech, and general research.
+      </p>
+    </header>
+
+    <p class="home-hint" data-home-hint>
+      点击卡片会进入全屏阅读态，左上角返回时会收缩回原位置。
+    </p>
+
+    <div class="post-grid" data-post-grid>
+      {renderedPosts.map(({ post, Content }) => (
+        <article class="post-card" data-post-card data-post-id={post.id} data-expanded="false">
+          <button
+            class="post-card__open"
+            type="button"
+            data-post-open
+            aria-expanded="false"
+            aria-label={`Open ${post.data.title}`}
+          >
+            <div class="post-card__summary" data-summary>
+              <h2 data-summary-title>{post.data.title}</h2>
+              <time data-summary-meta datetime={post.data.date.toISOString()}>
+                {formatDate(post.data.date)}
+              </time>
+
+              {post.data.description && <p data-summary-desc>{post.data.description}</p>}
+
+              {post.data.tags && post.data.tags.length > 0 && (
+                <div class="post-card__tags" data-summary-tags>
+                  {post.data.tags.map((tag) => (
+                    <span>{tag}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+          </button>
+
+          <section class="post-card__panel" data-post-panel aria-hidden="true">
+            <div class="post-card__panel-shell">
+              <button class="post-card__back" type="button" data-post-close>
+                <span aria-hidden="true">←</span>
+                返回上一级
+              </button>
+
+              <article class="post-card__panel-content" data-reader>
+                <header class="post-card__reader-head" data-reader-head>
+                  <time data-reader-meta datetime={post.data.date.toISOString()}>
+                    {formatDate(post.data.date)}
+                  </time>
+                  <h2 class="post-card__reader-title" data-reader-title>
+                    {post.data.title}
+                  </h2>
+
+                  {post.data.description && (
+                    <p class="post-card__reader-description" data-reader-desc>
+                      {post.data.description}
+                    </p>
+                  )}
+
+                  {post.data.tags && post.data.tags.length > 0 && (
+                    <div class="post-card__tags post-card__tags--reader" data-reader-tags>
+                      {post.data.tags.map((tag) => (
+                        <span>{tag}</span>
+                      ))}
+                    </div>
+                  )}
+                </header>
+
+                <div
+                  class="post-card__reader-prose prose prose-lg prose-neutral max-w-none dark:prose-invert prose-headings:font-medium prose-a:text-primary hover:prose-a:text-primary-container prose-img:rounded-2xl prose-pre:bg-surface-variant prose-pre:text-on-surface-variant"
+                  data-reader-prose
+                >
+                  <Content />
+                </div>
+              </article>
+            </div>
+          </section>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <script type="module" src="/post-expander.js"></script>
+</Layout>

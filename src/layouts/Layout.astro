@@ -1,0 +1,52 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  fullBleed?: boolean;
+}
+
+const { title, fullBleed = false } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="A personal blog for research and sharing" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body class="min-h-screen bg-background text-on-background">
+    <!-- MD3 Top App Bar -->
+    <div class="min-h-screen flex flex-col">
+      <header data-site-header class="sticky top-0 z-50 w-full border-b border-transparent bg-background/78 backdrop-blur-xl">
+        <div class="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-6 md:px-8">
+          <a href="/" class="text-2xl font-medium tracking-tight text-on-background hover:text-primary transition-colors">
+            My Research
+          </a>
+          <nav class="flex gap-4">
+            <a href="/" class="text-on-surface-variant hover:text-on-surface font-medium transition-colors">Home</a>
+            <a href="/about" class="text-on-surface-variant hover:text-on-surface font-medium transition-colors">About</a>
+          </nav>
+        </div>
+      </header>
+
+      <main
+        data-site-main
+        class:list={[
+          'flex-1 w-full',
+          fullBleed ? 'py-0' : 'mx-auto max-w-7xl px-4 py-8 md:px-8',
+        ]}
+      >
+        <slot />
+      </main>
+
+      <footer data-site-footer class="w-full text-center py-8 text-sm text-on-surface-variant">
+        &copy; {new Date().getFullYear()} My Research. Built with Astro & Cloudflare Pages.
+      </footer>
+    </div>
+  </body>
+</html>

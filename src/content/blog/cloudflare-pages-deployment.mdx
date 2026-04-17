@@ -1,0 +1,25 @@
+---
+title: "在 Cloudflare Pages 上部署 Astro 静态博客"
+description: "为什么选择 Cloudflare Pages？它的边缘网络、快速构建以及与 GitHub 的无缝集成。"
+date: 2026-04-17
+tags: ["Deployment", "Cloudflare", "Astro"]
+---
+
+## 极致的速度
+
+选择 Astro 的一个核心原因就是它默认输出零 JS 的纯 HTML。当我们将这样一份干净的产物托管到 Cloudflare Pages 时，一切都发生在边缘节点（Edge）。你的用户无论在日本、欧洲还是北美，都能在几十毫秒内打开你的博客。
+
+### 部署流程
+
+1. 在 GitHub 创建仓库并推送代码。
+2. 登录 Cloudflare 控制台，选择 Pages -> Connect to Git。
+3. 选择你的项目，框架预设选择 `Astro`。
+4. 构建命令会自动填入 `npm run build`，输出目录为 `dist`。
+5. 点击 Save and Deploy。
+
+### 一些坑与技巧
+
+- **Node 版本**：记得在 Cloudflare 的环境变量中设置 `NODE_VERSION` 为较新的版本（比如 `20`）。
+- **缓存控制**：Cloudflare 会自动处理大部分静态资产的缓存，但是如果你有特定的 API 路由，可能需要注意 Header 的配置。
+
+静态博客的乐趣在于，你拥有完全的掌控权，不需要维护数据库，不怕流量攻击。只要代码一推，剩下的就交给强大的基础设施。
