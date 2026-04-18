@@ -8,7 +8,7 @@ const { class: className = '' } = Astro.props;
 
 <figure class:list={['not-prose', 'von-diagram', className]}>
   <svg
-    viewBox="0 0 900 420"
+    viewBox="0 0 900 500"
     role="img"
     aria-labelledby="von-title von-desc"
     xmlns="http://www.w3.org/2000/svg"
@@ -35,67 +35,79 @@ const { class: className = '' } = Astro.props;
     </defs>
 
     <!-- Background card -->
-    <rect x="18" y="18" width="864" height="384" rx="26" fill="color-mix(in srgb, var(--md-sys-color-surface) 94%, transparent)" stroke="color-mix(in srgb, var(--md-sys-color-outline) 18%, transparent)" />
+    <rect x="18" y="18" width="864" height="464" rx="26" fill="color-mix(in srgb, var(--md-sys-color-surface) 94%, transparent)" stroke="color-mix(in srgb, var(--md-sys-color-outline) 18%, transparent)" />
 
     <!-- Nodes -->
     <g filter="url(#soft-shadow)">
-      <rect class="node" x="64" y="168" width="170" height="86" rx="18" />
-      <rect class="node" x="365" y="168" width="170" height="86" rx="18" />
-      <rect class="node" x="640" y="92" width="200" height="86" rx="18" />
-      <rect class="node" x="640" y="252" width="200" height="86" rx="18" />
-      <rect class="node node--cu" x="350" y="36" width="200" height="74" rx="18" />
+      <rect class="node" x="70" y="290" width="190" height="80" rx="18" />
+
+      <rect class="node node--cpu" x="330" y="180" width="240" height="200" rx="22" />
+      <rect class="node node--cu" x="350" y="200" width="200" height="70" rx="18" />
+      <rect class="node" x="350" y="290" width="200" height="80" rx="18" />
+
+      <rect class="node" x="340" y="60" width="220" height="80" rx="18" />
+      <rect class="node" x="640" y="290" width="190" height="80" rx="18" />
     </g>
 
     <!-- Labels -->
     <g class="label">
-      <text x="149" y="206" text-anchor="middle">输入设备</text>
-      <text x="450" y="206" text-anchor="middle">运算器（ALU）</text>
-      <text x="740" y="130" text-anchor="middle">存储器（Memory）</text>
-      <text x="740" y="290" text-anchor="middle">输出设备</text>
-      <text x="450" y="78" text-anchor="middle">控制器（CU）</text>
+      <text x="165" y="330" text-anchor="middle">输入设备</text>
+
+      <text x="450" y="235" text-anchor="middle">控制器（CU）</text>
+      <text x="450" y="330" text-anchor="middle">运算器（ALU）</text>
+
+      <text x="450" y="100" text-anchor="middle">存储器（Memory）</text>
+      <text x="735" y="330" text-anchor="middle">输出设备</text>
     </g>
 
     <!-- Data path (solid) -->
     <g class="data">
       <!-- Input -> ALU -->
-      <path d="M 234 211 L 365 211" marker-end="url(#arrow-data)" />
+      <path d="M 260 330 L 350 330" marker-end="url(#arrow-data)" />
 
-      <!-- ALU <-> Memory (two parallel arrows) -->
-      <path d="M 535 198 L 640 146" marker-end="url(#arrow-data)" />
-      <path d="M 640 162 L 535 222" marker-end="url(#arrow-data)" />
+      <!-- Memory <-> ALU -->
+      <path d="M 450 140 L 450 290" marker-start="url(#arrow-data)" marker-end="url(#arrow-data)" />
 
       <!-- ALU -> Output -->
-      <path d="M 535 224 L 640 274" marker-end="url(#arrow-data)" />
+      <path d="M 550 330 L 640 330" marker-end="url(#arrow-data)" />
     </g>
 
     <!-- Control signals (blue) -->
     <g class="control">
-      <path d="M 450 110 L 450 168" marker-end="url(#arrow-control)" />
-      <path d="M 520 98 L 670 92" marker-end="url(#arrow-control)" />
-      <path d="M 520 102 L 670 252" marker-end="url(#arrow-control)" />
-      <path d="M 380 98 L 234 168" marker-end="url(#arrow-control)" />
+      <!-- CU -> Memory -->
+      <path d="M 500 200 L 500 140" marker-end="url(#arrow-control)" />
+
+      <!-- CU -> Input -->
+      <path d="M 350 235 L 350 170 L 165 170 L 165 290" marker-end="url(#arrow-control)" />
+
+      <!-- CU -> Output -->
+      <path d="M 550 235 L 550 170 L 735 170 L 735 290" marker-end="url(#arrow-control)" />
     </g>
 
     <!-- Status / feedback (dashed) -->
     <g class="status">
-      <path d="M 450 168 L 420 110" marker-end="url(#arrow-status)" />
-      <path d="M 740 178 L 510 110" marker-end="url(#arrow-status)" />
-      <path d="M 740 252 L 520 110" marker-end="url(#arrow-status)" />
-      <path d="M 149 168 L 350 110" marker-end="url(#arrow-status)" />
+      <!-- Memory -> CU -->
+      <path d="M 400 140 L 400 200" marker-end="url(#arrow-status)" />
+
+      <!-- Input -> CU -->
+      <path d="M 165 370 L 165 400 L 380 400 L 380 270" marker-end="url(#arrow-status)" />
+
+      <!-- Output -> CU -->
+      <path d="M 735 370 L 735 400 L 520 400 L 520 270" marker-end="url(#arrow-status)" />
     </g>
 
     <!-- Legend -->
     <g class="legend">
-      <rect x="58" y="310" width="298" height="78" rx="18" />
-      <g transform="translate(76 332)">
+      <rect x="58" y="412" width="310" height="70" rx="18" />
+      <g transform="translate(76 432)">
         <path class="legend-data" d="M 0 0 L 52 0" marker-end="url(#arrow-data)" />
         <text x="68" y="5">数据（实线）</text>
       </g>
-      <g transform="translate(76 356)">
+      <g transform="translate(76 454)">
         <path class="legend-control" d="M 0 0 L 52 0" marker-end="url(#arrow-control)" />
         <text x="68" y="5">控制（蓝色线）</text>
       </g>
-      <g transform="translate(76 380)">
+      <g transform="translate(76 476)">
         <path class="legend-status" d="M 0 0 L 52 0" marker-end="url(#arrow-status)" />
         <text x="68" y="5">反馈/状态（虚线）</text>
       </g>
@@ -126,6 +138,12 @@ const { class: className = '' } = Astro.props;
 
   .node--cu {
     fill: color-mix(in srgb, var(--md-sys-color-primary-container) 42%, var(--md-sys-color-background));
+  }
+
+  .node--cpu {
+    fill: color-mix(in srgb, var(--md-sys-color-surface-variant) 18%, transparent);
+    stroke: color-mix(in srgb, var(--md-sys-color-outline) 26%, transparent);
+    stroke-width: 1.4;
   }
 
   .label text {
@@ -206,4 +224,3 @@ const { class: className = '' } = Astro.props;
     line-height: 1.55;
   }
 </style>
-
