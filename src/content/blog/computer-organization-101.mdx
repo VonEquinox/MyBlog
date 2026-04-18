@@ -5,7 +5,7 @@ date: 2026-04-10
 tags: ["Computer Organization", "Architecture", "Study"]
 ---
 
-import VonNeumannDiagram from '../../components/VonNeumannDiagram.astro';
+import vonNeumannDiagram from './von-neumann-diagram.png';
 
 ## 从一个最朴素的需求开始
 
@@ -81,8 +81,8 @@ import VonNeumannDiagram from '../../components/VonNeumannDiagram.astro';
 这五个部件之间有三种信号在流动：
 
 - **数据**（实线）：实际要处理的数值、指令内容
-- **控制**（蓝色线）：控制器发出的指挥信号，告诉各部件"该你做什么了"
-- **反馈/状态**（虚线）：各部件向控制器汇报自己的状态
+- **控制**（黑色虚线）：控制器发出的指挥信号，告诉各部件"该你做什么了"
+- **反馈/状态**（蓝色虚线）：各部件向控制器汇报自己的状态
 
 在冯·诺依曼的原始设计中，**运算器是数据通路的中心**：
 
@@ -91,7 +91,15 @@ import VonNeumannDiagram from '../../components/VonNeumannDiagram.astro';
 存储器 → 运算器 → 输出设备
 ```
 
-<VonNeumannDiagram />
+<figure class="not-prose" style="margin: 1.75rem 0 2.15rem;">
+  <img
+    src={vonNeumannDiagram}
+    alt="冯·诺依曼架构五大部件连接示意图（数据线/控制线/反馈线）"
+    loading="lazy"
+    decoding="async"
+    style="display:block;width:100%;max-width:720px;height:auto;margin:0 auto;"
+  />
+</figure>
 
 所有数据——无论是从输入设备读入还是从存储器取出——都要经过运算器中转。输入设备不能直接把数据写进存储器，输出设备也不能直接从存储器读数据。控制器则像指挥官一样，向所有部件发出控制信号（但自己不搬运数据），同时接收各部件的状态反馈来决定下一步。
 
