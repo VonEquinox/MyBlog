@@ -34,10 +34,6 @@ const renderedPosts = await Promise.all(
       </p>
     </header>
 
-    <p class="home-hint" data-home-hint>
-      点击卡片会进入全屏阅读态，左上角返回时会收缩回原位置。
-    </p>
-
     <div class="post-grid" data-post-grid>
       {renderedPosts.map(({ post, Content }) => (
         <article class="post-card" data-post-card data-post-id={post.id} data-expanded="false">
