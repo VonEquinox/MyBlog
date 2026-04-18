@@ -560,7 +560,39 @@ if (!grid) {
     }
 
     // Reset styles back to normal flow and let CSS handle full-screen layout.
+    // Small FLIP handoff to avoid any last-millisecond horizontal "pop" when we
+    // remove `position: fixed` (can happen due to scrollbar/padding differences).
+    const beforeHandoff = activeCard.getBoundingClientRect();
     clearFixedStyles();
+    const afterHandoff = activeCard.getBoundingClientRect();
+    const dx = beforeHandoff.left - afterHandoff.left;
+    const dy = beforeHandoff.top - afterHandoff.top;
+
+    if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
+      activeCard.style.willChange = 'transform';
+      // Start from the fixed visual position.
+      activeCard.style.transform = `translate(${dx}px, ${dy}px)`;
+      const handoff = activeCard.animate(
+        [
+          { transform: `translate(${dx}px, ${dy}px)` },
+          { transform: 'translate(0px, 0px)' },
+        ],
+        {
+          duration: Math.max(140, DURATION_ACTIVE * 0.22),
+          easing: EASING,
+          fill: 'forwards',
+        }
+      );
+      await handoff.finished;
+      try {
+        handoff.commitStyles();
+      } catch {
+        // ignore
+      }
+      handoff.cancel();
+      activeCard.style.transform = '';
+      activeCard.style.willChange = '';
+    }
     window.scrollTo({ top: 0 });
 
     const back = card.querySelector('[data-post-close]');
