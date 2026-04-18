@@ -516,6 +516,12 @@ if (!grid) {
       );
     }
 
+    // Use clientWidth/Height (content viewport) instead of innerWidth/Height (may include
+    // scrollbar), otherwise when we switch from fixed -> normal flow at the end there can
+    // be a small "pop" due to a few px mismatch.
+    const viewportWidth = document.documentElement.clientWidth || window.innerWidth;
+    const viewportHeight = document.documentElement.clientHeight || window.innerHeight;
+
     const activeAnimation = activeCard.animate(
       [
         {
@@ -528,8 +534,8 @@ if (!grid) {
         {
           left: '0px',
           top: '0px',
-          width: `${window.innerWidth}px`,
-          height: `${window.innerHeight}px`,
+          width: `${viewportWidth}px`,
+          height: `${viewportHeight}px`,
           borderRadius: '0px',
         },
       ],
