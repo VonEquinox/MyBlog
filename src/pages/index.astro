@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getCollection, render } from 'astro:content';
+import postExpanderUrl from '../scripts/post-expander.js?url';
 
 const posts = await getCollection('blog');
 posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
@@ -86,5 +87,5 @@ const renderedPosts = await Promise.all(
     </div>
   </section>
 
-  <script type="module" src="/post-expander.js"></script>
+  <script type="module" src={postExpanderUrl}></script>
 </Layout>
