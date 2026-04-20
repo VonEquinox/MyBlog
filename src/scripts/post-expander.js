@@ -560,6 +560,13 @@ if (!grid) {
     activeAnimation.cancel();
     delete activeCard.dataset.animating;
 
+    // IMPORTANT:
+    // Reset scroll while the active card is still `position: fixed` and pinned to
+    // the viewport. Otherwise, when we hide the home chrome (header/hero/hint)
+    // and switch the card back to normal flow, browsers may briefly adjust the
+    // scroll position ("scroll down a bit") and then we snap to top ("bounce").
+    window.scrollTo({ top: 0, left: 0 });
+
     // Switch to reading mode (no overlay): hide chrome + hide other cards.
     setReadingMode(true);
     clearChromeMotionStyles(chromeTargets);
@@ -598,7 +605,6 @@ if (!grid) {
       activeCard.style.transform = '';
       activeCard.style.willChange = '';
     }
-    window.scrollTo({ top: 0 });
 
     const back = card.querySelector('[data-post-close]');
     if (back instanceof HTMLElement) back.focus();
