@@ -1,5 +1,6 @@
 @plugin "@tailwindcss/typography";
 @import "tailwindcss";
+@import "katex/dist/katex.min.css";
 
 @theme {
   --color-primary: var(--md-sys-color-primary);
