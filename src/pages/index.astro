@@ -19,6 +19,8 @@ const renderedPosts = await Promise.all(
     return { post, Content };
   })
 );
+
+const postKeyOf = (post: (typeof posts)[number]) => post.id.replace(/\/index$/, '');
 ---
 
 <Layout title="My Research | Home">
@@ -37,7 +39,7 @@ const renderedPosts = await Promise.all(
 
     <div class="post-grid" data-post-grid>
       {renderedPosts.map(({ post, Content }) => (
-        <article class="post-card" data-post-card data-post-id={post.id} data-expanded="false">
+        <article class="post-card" data-post-card data-post-id={postKeyOf(post)} data-expanded="false">
           <button
             class="post-card__open"
             type="button"

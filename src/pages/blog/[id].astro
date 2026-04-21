@@ -4,18 +4,23 @@ import Layout from '../../layouts/Layout.astro';
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection('blog');
-  return blogEntries.map(entry => ({
-    params: { id: entry.id }, props: { entry },
-  }));
+  return blogEntries.map((entry) => {
+    // Folder-style entries often end up with an id like "post-slug/index".
+    // Our route is /blog/[id], so we normalize to the folder name.
+    const id = entry.id.replace(/\/index$/, '');
+    return { params: { id }, props: { entry } };
+  });
 }
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const cardName = `post-card-${entry.id}`;
-const titleName = `post-title-${entry.id}`;
-const metaName = `post-meta-${entry.id}`;
-const descName = `post-desc-${entry.id}`;
-const tagsName = `post-tags-${entry.id}`;
+const key = entry.id.replace(/\/index$/, '');
+const safeKey = String(key).replaceAll('/', '-');
+const cardName = `post-card-${safeKey}`;
+const titleName = `post-title-${safeKey}`;
+const metaName = `post-meta-${safeKey}`;
+const descName = `post-desc-${safeKey}`;
+const tagsName = `post-tags-${safeKey}`;
 ---
 
 <Layout title={`${entry.data.title} | My Research`} fullBleed={true}>
