@@ -441,3 +441,12 @@ html[data-reading='true'] .post-card:not([data-expanded='true']) {
     width: 100%;
   }
 }
+
+/* Tailwind Typography adds decorative backticks around inline <code>.
+   In this blog it reads like stray quotes, so we disable it globally. */
+.prose
+  :where(code):not(:where([class~='not-prose'], [class~='not-prose'] *))::before,
+.prose
+  :where(code):not(:where([class~='not-prose'], [class~='not-prose'] *))::after {
+  content: none;
+}
