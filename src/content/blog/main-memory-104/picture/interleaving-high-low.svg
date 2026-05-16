@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 640" role="img" aria-labelledby="title desc">
+  <title id="title">高位交叉与低位交叉：连续地址到底落在哪个存储体</title>
+  <desc id="desc">对比高位交叉编址与低位交叉编址：高位交叉让连续地址扎堆在同一体，低位交叉让相邻地址轮转分散。</desc>
+  <defs>
+    <style>
+      .title { font: 800 30px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; }
+      .sub   { font: 800 24px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; }
+      .hint  { font: 600 16px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #4b5563; }
+      .mono  { font: 780 18px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #111827; }
+      .tiny  { font: 500 14px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #6b7280; }
+    </style>
+  </defs>
+
+  <rect x="24" y="24" width="1072" height="592" rx="34" fill="#fff" stroke="#111827" stroke-width="2.5" stroke-dasharray="8 9" />
+  <text x="64" y="76" class="title">交叉编址：连续地址是“扎堆”还是“轮转”？</text>
+
+  <!-- Left: high-order -->
+  <g transform="translate(64,120)">
+    <text x="0" y="0" class="sub">高位交叉（High-Order Interleaving）</text>
+    <text x="0" y="28" class="hint">高位选体，低位做体内地址：0..n-1 都在 M0</text>
+
+    <rect x="0" y="54" width="450" height="240" rx="18" fill="#f9fafb" stroke="#94a3b8" stroke-width="2" />
+
+    <g transform="translate(18,82)">
+      <text x="0" y="0" class="mono">M0: 0, 1, 2, ..., n-1</text>
+      <text x="0" y="44" class="mono">M1: n, n+1, ..., 2n-1</text>
+      <text x="0" y="88" class="mono">M2: 2n, 2n+1, ..., 3n-1</text>
+      <text x="0" y="132" class="mono">M3: 3n, 3n+1, ..., 4n-1</text>
+    </g>
+
+    <rect x="0" y="312" width="450" height="110" rx="18" fill="#eef2ff" stroke="#94a3b8" stroke-width="2" />
+    <text x="18" y="348" class="hint">连续读 0,1,2,3,...</text>
+    <text x="18" y="376" class="hint">大概率都撞在同一个体里</text>
+    <text x="18" y="404" class="tiny">多体在这里更像“分区扩容”</text>
+  </g>
+
+  <!-- Right: low-order -->
+  <g transform="translate(610,120)">
+    <text x="0" y="0" class="sub">低位交叉（Low-Order Interleaving）</text>
+    <text x="0" y="28" class="hint">低位选体，高位做体内地址：0,1,2,3 轮流落在 M0..M3</text>
+
+    <rect x="0" y="54" width="450" height="240" rx="18" fill="#f9fafb" stroke="#94a3b8" stroke-width="2" />
+
+    <g transform="translate(18,82)">
+      <text x="0" y="0" class="mono">M0: 0, 4, 8, ..., 4n-4</text>
+      <text x="0" y="44" class="mono">M1: 1, 5, 9, ..., 4n-3</text>
+      <text x="0" y="88" class="mono">M2: 2, 6, 10, ..., 4n-2</text>
+      <text x="0" y="132" class="mono">M3: 3, 7, 11, ..., 4n-1</text>
+    </g>
+
+    <rect x="0" y="312" width="450" height="110" rx="18" fill="#dbeafe" stroke="#94a3b8" stroke-width="2" />
+    <text x="18" y="348" class="hint">连续读 0,1,2,3,...</text>
+    <text x="18" y="376" class="hint">请求会轮转分散到不同存储体</text>
+    <text x="18" y="404" class="tiny">这才有“并行/流水”的空间</text>
+  </g>
+
+  <text x="64" y="602" class="tiny">记忆法：体号在地址的高位 = 高位交叉；体号在地址的低位 = 低位交叉。</text>
+</svg>
+

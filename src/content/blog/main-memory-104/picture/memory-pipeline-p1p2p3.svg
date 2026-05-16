@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 720" role="img" aria-labelledby="title desc">
+  <title id="title">四体低位交叉的访问流水：P1/P2/P3 如何重叠</title>
+  <desc id="desc">把一次读拆成 P1(送地址) / P2(存储体内部访问，4t) / P3(传送数据)。在四体低位交叉下，相邻地址落在不同存储体，因此可以让不同存储体的 P2 阶段并行重叠，从而提高吞吐。</desc>
+  <defs>
+    <style>
+      .title { font: 800 30px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; }
+      .sub   { font: 700 16px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #4b5563; }
+      .axis  { stroke: #d1d5db; stroke-width: 2; }
+      .grid  { stroke: #e5e7eb; stroke-width: 1; }
+      .label { font: 750 18px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; }
+      .mono  { font: 780 16px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #111827; }
+      .tiny  { font: 650 14px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #6b7280; }
+      .p1 { fill: #bfdbfe; stroke: #2563eb; stroke-width: 2; }
+      .p2 { fill: #bbf7d0; stroke: #16a34a; stroke-width: 2; }
+      .p3 { fill: #fde68a; stroke: #d97706; stroke-width: 2; }
+      .bank { fill: #111827; }
+      .hint { fill: #374151; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect x="0" y="0" width="1180" height="720" fill="#ffffff" />
+
+  <!-- Header -->
+  <text x="60" y="70" class="title">四体低位交叉：P1 / P2 / P3 的重叠到底长什么样</text>
+  <text x="60" y="102" class="sub">假设：P1=t，P2=4t（存储周期主体），P3=t。连续访问 0,1,2,3,4,5,... 轮流落到 M0~M3。</text>
+
+  <!-- Legend -->
+  <rect x="60" y="130" width="22" height="14" class="p1" rx="4" />
+  <text x="92" y="142" class="tiny">P1：送地址/命令</text>
+  <rect x="240" y="130" width="22" height="14" class="p2" rx="4" />
+  <text x="272" y="142" class="tiny">P2：存储体内部读取（4t）</text>
+  <rect x="490" y="130" width="22" height="14" class="p3" rx="4" />
+  <text x="522" y="142" class="tiny">P3：传送数据</text>
+
+  <!-- Timeline frame -->
+  <!-- Geometry constants (manual): -->
+  <!-- left = 180, top = 190, cellW = 80, rowH = 86 -->
+  <line x1="180" y1="190" x2="1100" y2="190" class="axis" />
+  <line x1="180" y1="620" x2="1100" y2="620" class="axis" />
+
+  <!-- Vertical grid + tick labels -->
+  <!-- 0..10 ticks -->
+  <g>
+    <!-- ticks -->
+    <line x1="180" y1="190" x2="180" y2="620" class="axis" />
+    <line x1="260" y1="190" x2="260" y2="620" class="grid" />
+    <line x1="340" y1="190" x2="340" y2="620" class="grid" />
+    <line x1="420" y1="190" x2="420" y2="620" class="grid" />
+    <line x1="500" y1="190" x2="500" y2="620" class="grid" />
+    <line x1="580" y1="190" x2="580" y2="620" class="grid" />
+    <line x1="660" y1="190" x2="660" y2="620" class="grid" />
+    <line x1="740" y1="190" x2="740" y2="620" class="grid" />
+    <line x1="820" y1="190" x2="820" y2="620" class="grid" />
+    <line x1="900" y1="190" x2="900" y2="620" class="grid" />
+    <line x1="980" y1="190" x2="980" y2="620" class="grid" />
+    <line x1="1060" y1="190" x2="1060" y2="620" class="grid" />
+    <line x1="1100" y1="190" x2="1100" y2="620" class="axis" />
+
+    <!-- labels -->
+    <text x="178" y="650" text-anchor="middle" class="mono">0</text>
+    <text x="258" y="650" text-anchor="middle" class="mono">1</text>
+    <text x="338" y="650" text-anchor="middle" class="mono">2</text>
+    <text x="418" y="650" text-anchor="middle" class="mono">3</text>
+    <text x="498" y="650" text-anchor="middle" class="mono">4</text>
+    <text x="578" y="650" text-anchor="middle" class="mono">5</text>
+    <text x="658" y="650" text-anchor="middle" class="mono">6</text>
+    <text x="738" y="650" text-anchor="middle" class="mono">7</text>
+    <text x="818" y="650" text-anchor="middle" class="mono">8</text>
+    <text x="898" y="650" text-anchor="middle" class="mono">9</text>
+    <text x="978" y="650" text-anchor="middle" class="mono">10</text>
+    <text x="1100" y="650" text-anchor="end" class="tiny">时间（单位：t）</text>
+  </g>
+
+  <!-- Row labels -->
+  <text x="90" y="250" class="label">M0</text>
+  <text x="90" y="336" class="label">M1</text>
+  <text x="90" y="422" class="label">M2</text>
+  <text x="90" y="508" class="label">M3</text>
+
+  <text x="60" y="600" class="tiny">读地址序列：0→M0，1→M1，2→M2，3→M3，4→M0…（低位交叉轮转）</text>
+
+  <!-- Helper: y positions -->
+  <!-- row0 y=214, row1 y=300, row2 y=386, row3 y=472 -->
+
+  <!-- M0 blocks: addr0 starts at 0 -->
+  <g>
+    <!-- P1 -->
+    <rect x="180" y="214" width="80" height="44" class="p1" rx="10" />
+    <text x="220" y="242" text-anchor="middle" class="mono">P1</text>
+    <text x="220" y="262" text-anchor="middle" class="tiny">A0</text>
+    <!-- P2 (4t) -->
+    <rect x="260" y="214" width="320" height="44" class="p2" rx="10" />
+    <text x="420" y="242" text-anchor="middle" class="mono">P2 (4t)</text>
+    <text x="420" y="262" text-anchor="middle" class="tiny">访问</text>
+    <!-- P3 -->
+    <rect x="580" y="214" width="80" height="44" class="p3" rx="10" />
+    <text x="620" y="242" text-anchor="middle" class="mono">P3</text>
+    <text x="620" y="262" text-anchor="middle" class="tiny">出数</text>
+  </g>
+
+  <!-- M1 blocks: addr1 starts at 1 -->
+  <g>
+    <rect x="260" y="300" width="80" height="44" class="p1" rx="10" />
+    <text x="300" y="328" text-anchor="middle" class="mono">P1</text>
+    <text x="300" y="348" text-anchor="middle" class="tiny">A1</text>
+    <rect x="340" y="300" width="320" height="44" class="p2" rx="10" />
+    <text x="500" y="328" text-anchor="middle" class="mono">P2 (4t)</text>
+    <text x="500" y="348" text-anchor="middle" class="tiny">访问</text>
+    <rect x="660" y="300" width="80" height="44" class="p3" rx="10" />
+    <text x="700" y="328" text-anchor="middle" class="mono">P3</text>
+    <text x="700" y="348" text-anchor="middle" class="tiny">出数</text>
+  </g>
+
+  <!-- M2 blocks: addr2 starts at 2 -->
+  <g>
+    <rect x="340" y="386" width="80" height="44" class="p1" rx="10" />
+    <text x="380" y="414" text-anchor="middle" class="mono">P1</text>
+    <text x="380" y="434" text-anchor="middle" class="tiny">A2</text>
+    <rect x="420" y="386" width="320" height="44" class="p2" rx="10" />
+    <text x="580" y="414" text-anchor="middle" class="mono">P2 (4t)</text>
+    <text x="580" y="434" text-anchor="middle" class="tiny">访问</text>
+    <rect x="740" y="386" width="80" height="44" class="p3" rx="10" />
+    <text x="780" y="414" text-anchor="middle" class="mono">P3</text>
+    <text x="780" y="434" text-anchor="middle" class="tiny">出数</text>
+  </g>
+
+  <!-- M3 blocks: addr3 starts at 3 -->
+  <g>
+    <rect x="420" y="472" width="80" height="44" class="p1" rx="10" />
+    <text x="460" y="500" text-anchor="middle" class="mono">P1</text>
+    <text x="460" y="520" text-anchor="middle" class="tiny">A3</text>
+    <rect x="500" y="472" width="320" height="44" class="p2" rx="10" />
+    <text x="660" y="500" text-anchor="middle" class="mono">P2 (4t)</text>
+    <text x="660" y="520" text-anchor="middle" class="tiny">访问</text>
+    <rect x="820" y="472" width="80" height="44" class="p3" rx="10" />
+    <text x="860" y="500" text-anchor="middle" class="mono">P3</text>
+    <text x="860" y="520" text-anchor="middle" class="tiny">出数</text>
+  </g>
+
+  <!-- Hint callout -->
+  <g>
+    <rect x="860" y="214" width="240" height="138" rx="18" fill="#f3f4f6" stroke="#d1d5db" stroke-width="2"/>
+    <text x="880" y="246" class="label" font-size="18">你在看什么？</text>
+    <text x="880" y="274" class="tiny">同一条时间轴上，不同存储体</text>
+    <text x="880" y="296" class="tiny">的 P2 阶段可以重叠。</text>
+    <text x="880" y="322" class="tiny">吞吐率变高的核心不是</text>
+    <text x="880" y="344" class="tiny">“P2 变短”，而是“等待被</text>
+    <text x="880" y="366" class="tiny">别的体的工作填满”。</text>
+  </g>
+</svg>
+

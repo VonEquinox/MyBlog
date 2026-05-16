@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 760" role="img" aria-labelledby="title desc">
+  <title id="title">主存容量扩展：位扩展、字扩展、字位扩展的三种拼法</title>
+  <desc id="desc">用小容量芯片拼成更大容量主存：位扩展加宽数据位数，字扩展加深可寻址字数，字位扩展二者同时做。</desc>
+  <defs>
+    <style>
+      .title { font: 800 30px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; }
+      .sub   { font: 800 24px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; }
+      .hint  { font: 600 16px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #4b5563; }
+      .mono  { font: 780 16px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #111827; }
+      .tiny  { font: 500 14px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #6b7280; }
+    </style>
+  </defs>
+
+  <rect x="24" y="24" width="1072" height="712" rx="34" fill="#fff" stroke="#111827" stroke-width="2.5" stroke-dasharray="8 9" />
+  <text x="64" y="76" class="title">主存容量的扩展：三种“拼芯片”的方向</text>
+
+  <!-- Bit extension -->
+  <g transform="translate(64,120)">
+    <text x="0" y="0" class="sub">位扩展：把一个字“变宽”</text>
+    <text x="0" y="28" class="hint">多片同时选中，共用地址/控制线，各自贡献数据总线的一段</text>
+
+    <rect x="0" y="54" width="990" height="140" rx="18" fill="#eef2ff" stroke="#94a3b8" stroke-width="2" />
+    <g transform="translate(22,84)">
+      <rect x="0" y="0" width="190" height="80" rx="12" fill="#dbeafe" stroke="#111827" stroke-width="2" />
+      <rect x="210" y="0" width="190" height="80" rx="12" fill="#dbeafe" stroke="#111827" stroke-width="2" />
+      <rect x="420" y="0" width="190" height="80" rx="12" fill="#dbeafe" stroke="#111827" stroke-width="2" />
+      <rect x="630" y="0" width="190" height="80" rx="12" fill="#dbeafe" stroke="#111827" stroke-width="2" />
+      <text x="95" y="48" class="mono" text-anchor="middle">chip0</text>
+      <text x="305" y="48" class="mono" text-anchor="middle">chip1</text>
+      <text x="515" y="48" class="mono" text-anchor="middle">chip2</text>
+      <text x="725" y="48" class="mono" text-anchor="middle">chip3</text>
+      <text x="860" y="46" class="tiny">并行输出</text>
+    </g>
+  </g>
+
+  <!-- Word extension -->
+  <g transform="translate(64,320)">
+    <text x="0" y="0" class="sub">字扩展：把可寻址单元“变多”</text>
+    <text x="0" y="28" class="hint">高位地址译码生成片选，一次只选中一片（或一组）</text>
+
+    <rect x="0" y="54" width="990" height="140" rx="18" fill="#f3f4f6" stroke="#94a3b8" stroke-width="2" />
+    <g transform="translate(22,84)">
+      <rect x="0" y="0" width="210" height="80" rx="12" fill="#fff" stroke="#111827" stroke-width="2" />
+      <rect x="250" y="0" width="210" height="80" rx="12" fill="#fff" stroke="#111827" stroke-width="2" />
+      <rect x="500" y="0" width="210" height="80" rx="12" fill="#fff" stroke="#111827" stroke-width="2" />
+      <rect x="750" y="0" width="210" height="80" rx="12" fill="#fff" stroke="#111827" stroke-width="2" />
+      <text x="105" y="48" class="mono" text-anchor="middle">chip0</text>
+      <text x="355" y="48" class="mono" text-anchor="middle">chip1</text>
+      <text x="605" y="48" class="mono" text-anchor="middle">chip2</text>
+      <text x="855" y="48" class="mono" text-anchor="middle">chip3</text>
+      <text x="105" y="102" class="tiny" text-anchor="middle">地址段 0</text>
+      <text x="355" y="102" class="tiny" text-anchor="middle">地址段 1</text>
+      <text x="605" y="102" class="tiny" text-anchor="middle">地址段 2</text>
+      <text x="855" y="102" class="tiny" text-anchor="middle">地址段 3</text>
+    </g>
+  </g>
+
+  <!-- Word-bit extension -->
+  <g transform="translate(64,520)">
+    <text x="0" y="0" class="sub">字位扩展：既加宽，也加深</text>
+    <text x="0" y="28" class="hint">把“位扩展的一组”再做字扩展：组内并行，组间片选</text>
+
+    <rect x="0" y="54" width="990" height="170" rx="18" fill="#f9fafb" stroke="#94a3b8" stroke-width="2" />
+    <g transform="translate(22,84)">
+      <rect x="0" y="0" width="450" height="60" rx="12" fill="#dbeafe" stroke="#111827" stroke-width="2" />
+      <rect x="0" y="80" width="450" height="60" rx="12" fill="#dbeafe" stroke="#111827" stroke-width="2" />
+      <rect x="520" y="0" width="450" height="60" rx="12" fill="#fff" stroke="#111827" stroke-width="2" />
+      <rect x="520" y="80" width="450" height="60" rx="12" fill="#fff" stroke="#111827" stroke-width="2" />
+
+      <text x="225" y="38" class="mono" text-anchor="middle">group0: chip0..3（并行）</text>
+      <text x="225" y="118" class="mono" text-anchor="middle">group1: chip0..3（并行）</text>
+      <text x="745" y="38" class="mono" text-anchor="middle">group2: chip0..3（并行）</text>
+      <text x="745" y="118" class="mono" text-anchor="middle">group3: chip0..3（并行）</text>
+    </g>
+  </g>
+
+  <text x="64" y="726" class="tiny">读写控制线（OE/WE）通常在位扩展的同组里共用；字扩展靠译码器产生不同的片选信号。</text>
+</svg>
+
