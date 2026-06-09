@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 500" role="img" aria-labelledby="title desc">
+  <title id="title">3 位补码的环形模运算直觉</title>
+  <desc id="desc">3 位计数器从 000 到 111 构成模 8 的环，111 可以解释为 -1，110 可以解释为 -2。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb" />
+    </marker>
+    <style>
+      .title { font: 700 30px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; }
+      .label { font: 700 20px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; }
+      .small { font: 500 15px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #4b5563; }
+      .note { font: 600 17px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <rect x="24" y="24" width="712" height="452" rx="34" fill="#fff" stroke="#111827" stroke-width="2.5" stroke-dasharray="8 9" />
+  <text x="64" y="72" class="title">3 位补码：把数放在一个 mod 8 的环上</text>
+
+  <circle cx="380" cy="260" r="145" fill="#f9fafb" stroke="#94a3b8" stroke-width="3" />
+  <path d="M 380 111 A 149 149 0 0 1 529 260" fill="none" stroke="#2563eb" stroke-width="4" marker-end="url(#arrow)" />
+  <path d="M 380 409 A 149 149 0 0 1 231 260" fill="none" stroke="#2563eb" stroke-width="4" marker-end="url(#arrow)" />
+
+  <g>
+    <circle cx="380" cy="100" r="36" fill="#dbeafe" stroke="#2563eb" stroke-width="2.5" />
+    <text x="380" y="96" class="label" text-anchor="middle">000</text>
+    <text x="380" y="119" class="small" text-anchor="middle">0</text>
+  </g>
+  <g>
+    <circle cx="493" cy="147" r="36" fill="#eef2ff" stroke="#64748b" stroke-width="2" />
+    <text x="493" y="143" class="label" text-anchor="middle">001</text>
+    <text x="493" y="166" class="small" text-anchor="middle">1</text>
+  </g>
+  <g>
+    <circle cx="540" cy="260" r="36" fill="#eef2ff" stroke="#64748b" stroke-width="2" />
+    <text x="540" y="256" class="label" text-anchor="middle">010</text>
+    <text x="540" y="279" class="small" text-anchor="middle">2</text>
+  </g>
+  <g>
+    <circle cx="493" cy="373" r="36" fill="#eef2ff" stroke="#64748b" stroke-width="2" />
+    <text x="493" y="369" class="label" text-anchor="middle">011</text>
+    <text x="493" y="392" class="small" text-anchor="middle">3</text>
+  </g>
+  <g>
+    <circle cx="380" cy="420" r="36" fill="#fee2e2" stroke="#dc2626" stroke-width="2.5" />
+    <text x="380" y="416" class="label" text-anchor="middle">100</text>
+    <text x="380" y="439" class="small" text-anchor="middle">-4</text>
+  </g>
+  <g>
+    <circle cx="267" cy="373" r="36" fill="#fff1f2" stroke="#64748b" stroke-width="2" />
+    <text x="267" y="369" class="label" text-anchor="middle">101</text>
+    <text x="267" y="392" class="small" text-anchor="middle">-3</text>
+  </g>
+  <g>
+    <circle cx="220" cy="260" r="36" fill="#fff1f2" stroke="#64748b" stroke-width="2" />
+    <text x="220" y="256" class="label" text-anchor="middle">110</text>
+    <text x="220" y="279" class="small" text-anchor="middle">-2</text>
+  </g>
+  <g>
+    <circle cx="267" cy="147" r="36" fill="#fee2e2" stroke="#dc2626" stroke-width="2.5" />
+    <text x="267" y="143" class="label" text-anchor="middle">111</text>
+    <text x="267" y="166" class="small" text-anchor="middle">-1</text>
+  </g>
+
+  <text x="380" y="250" class="note" text-anchor="middle">000 往下减 1</text>
+  <text x="380" y="278" class="note" text-anchor="middle">会绕到 111</text>
+  <text x="380" y="309" class="small" text-anchor="middle">所以在 3 位里：-1 和 7 是同一串位</text>
+</svg>

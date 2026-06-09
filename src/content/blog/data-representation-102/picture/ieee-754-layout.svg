@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 720" role="img" aria-labelledby="title desc">
+  <title id="title">IEEE 754 单精度和双精度浮点数字段布局</title>
+  <desc id="desc">单精度由 1 位符号位、8 位阶码和 23 位尾数字段组成；双精度由 1 位符号位、11 位阶码和 52 位尾数字段组成。</desc>
+  <defs>
+    <style>
+      .title { font: 800 32px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; }
+      .section { font: 800 26px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; }
+      .field { font: 800 25px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; }
+      .bit { font: 700 22px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; }
+      .caption { font: 700 22px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #374151; }
+      .hint { font: 500 16px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #6b7280; }
+    </style>
+  </defs>
+
+  <rect x="24" y="24" width="1072" height="672" rx="32" fill="#fff" stroke="#111827" stroke-width="2.5" stroke-dasharray="8 9" />
+  <text x="64" y="76" class="title">IEEE 754 的位段切分</text>
+
+  <g transform="translate(64,118)">
+    <text x="0" y="0" class="section">Single Precision（32 位）</text>
+    <text x="0" y="65" class="bit">31</text>
+    <text x="62" y="65" class="bit">30</text>
+    <text x="320" y="65" class="bit">23</text>
+    <text x="370" y="65" class="bit">22</text>
+    <text x="980" y="65" class="bit">0</text>
+
+    <rect x="0" y="88" width="60" height="92" fill="#f3f4f6" stroke="#111827" stroke-width="2" />
+    <rect x="60" y="88" width="300" height="92" fill="#dbeafe" stroke="#111827" stroke-width="2" />
+    <rect x="360" y="88" width="620" height="92" fill="#f3f4f6" stroke="#111827" stroke-width="2" />
+
+    <text x="30" y="144" class="field" text-anchor="middle">s</text>
+    <text x="210" y="144" class="field" text-anchor="middle">exp</text>
+    <text x="670" y="144" class="field" text-anchor="middle">frac</text>
+
+    <text x="210" y="222" class="caption" text-anchor="middle">阶码 8 位</text>
+    <text x="670" y="222" class="caption" text-anchor="middle">尾数 23 位</text>
+    <text x="30" y="222" class="caption" text-anchor="middle">1 位</text>
+  </g>
+
+  <g transform="translate(64,390)">
+    <text x="0" y="0" class="section">Double Precision（64 位）</text>
+    <text x="0" y="65" class="bit">63</text>
+    <text x="62" y="65" class="bit">62</text>
+    <text x="420" y="65" class="bit">52</text>
+    <text x="470" y="65" class="bit">51</text>
+    <text x="980" y="65" class="bit">32</text>
+
+    <rect x="0" y="88" width="60" height="92" fill="#f3f4f6" stroke="#111827" stroke-width="2" />
+    <rect x="60" y="88" width="410" height="92" fill="#dbeafe" stroke="#111827" stroke-width="2" />
+    <rect x="470" y="88" width="510" height="92" fill="#f3f4f6" stroke="#111827" stroke-width="2" />
+
+    <text x="30" y="144" class="field" text-anchor="middle">s</text>
+    <text x="265" y="144" class="field" text-anchor="middle">exp</text>
+    <text x="725" y="144" class="field" text-anchor="middle">frac (51:32)</text>
+
+    <text x="265" y="222" class="caption" text-anchor="middle">阶码 11 位</text>
+    <text x="725" y="222" class="caption" text-anchor="middle">尾数 52 位</text>
+
+    <text x="0" y="292" class="bit">31</text>
+    <text x="980" y="292" class="bit">0</text>
+    <rect x="0" y="315" width="980" height="82" fill="#f3f4f6" stroke="#111827" stroke-width="2" />
+    <text x="490" y="365" class="field" text-anchor="middle">frac (31:0)</text>
+    <text x="490" y="424" class="hint" text-anchor="middle">双精度尾数太长，这里拆成高 20 位和低 32 位来画</text>
+  </g>
+</svg>
