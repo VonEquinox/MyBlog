@@ -30,3 +30,9 @@ test-results/
 
 # temporary working files
 tmp/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
